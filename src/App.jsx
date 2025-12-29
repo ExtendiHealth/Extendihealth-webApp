@@ -1162,37 +1162,39 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
   const VolumeIcon = getVolumeIcon();
 
   return (
-    <div className="flex flex-col h-full items-center justify-center animate-in fade-in slide-in-from-right-4 duration-500 max-w-xl mx-auto w-full">
-      <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-violet-100 text-violet-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Eye className="w-8 h-8" />
+    <div className="flex flex-col h-full w-full max-w-xl mx-auto animate-in fade-in slide-in-from-right-4 duration-500">
+      {/* Scrollable content area */}
+      <div className="flex-1 overflow-y-auto pb-4">
+        <div className="text-center mb-6 pt-2">
+          <div className="w-14 h-14 bg-violet-100 text-violet-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+            <Eye className="w-7 h-7" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-1">Accessibility Settings</h2>
+          <p className="text-slate-500 text-sm">Customize your experience for comfort and ease of use</p>
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-2">Accessibility Settings</h2>
-        <p className="text-slate-500">Customize your experience for comfort and ease of use</p>
-      </div>
 
-      <Card className="w-full mb-8">
-        <div className="space-y-6">
+        <Card className="w-full" padding="p-5">
+          <div className="space-y-4">
           {/* Language Selection */}
           <div>
-            <label className="block text-sm font-semibold text-slate-600 mb-3 uppercase tracking-wider">
-              <Globe className="w-4 h-4 inline mr-2" />
+            <label className="block text-xs font-semibold text-slate-600 mb-2 uppercase tracking-wider">
+              <Globe className="w-3 h-3 inline mr-1" />
               Language
             </label>
             <div className="relative">
               <button
                 onClick={() => setShowLanguages(!showLanguages)}
-                className="w-full p-4 border-2 border-slate-200 rounded-xl flex items-center justify-between hover:border-blue-300 transition-colors"
+                className="w-full p-3 border-2 border-slate-200 rounded-xl flex items-center justify-between hover:border-blue-300 transition-colors"
               >
-                <span className="flex items-center gap-3 text-lg">
-                  <span className="text-2xl">{settings.language.flag}</span>
+                <span className="flex items-center gap-2 text-base">
+                  <span className="text-xl">{settings.language.flag}</span>
                   <span className="font-medium">{settings.language.name}</span>
                 </span>
                 <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${showLanguages ? 'rotate-180' : ''}`} />
               </button>
               
               {showLanguages && (
-                <div className="absolute z-10 w-full mt-2 bg-white border-2 border-slate-200 rounded-xl shadow-xl overflow-hidden max-h-64 overflow-y-auto">
+                <div className="absolute z-10 w-full mt-2 bg-white border-2 border-slate-200 rounded-xl shadow-xl overflow-hidden max-h-48 overflow-y-auto">
                   {LANGUAGES.map(lang => (
                     <button
                       key={lang.code}
@@ -1200,14 +1202,14 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
                         setSettings(s => ({ ...s, language: lang }));
                         setShowLanguages(false);
                       }}
-                      className={`w-full p-4 flex items-center gap-3 hover:bg-blue-50 transition-colors ${
+                      className={`w-full p-3 flex items-center gap-3 hover:bg-blue-50 transition-colors ${
                         settings.language.code === lang.code ? 'bg-blue-50' : ''
                       }`}
                     >
-                      <span className="text-2xl">{lang.flag}</span>
-                      <span className="font-medium">{lang.name}</span>
+                      <span className="text-xl">{lang.flag}</span>
+                      <span className="font-medium text-sm">{lang.name}</span>
                       {settings.language.code === lang.code && (
-                        <Check className="w-5 h-5 text-blue-600 ml-auto" />
+                        <Check className="w-4 h-4 text-blue-600 ml-auto" />
                       )}
                     </button>
                   ))}
@@ -1220,16 +1222,16 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
 
           {/* Voice Guidance */}
           <div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between py-1">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
                   settings.voiceGuidance ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-600'
                 }`}>
-                  <Volume2 className="w-5 h-5" />
+                  <Volume2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-800">Voice Guidance</p>
-                  <p className="text-sm text-slate-500">Audio instructions throughout</p>
+                  <p className="font-semibold text-slate-800 text-sm">Voice Guidance</p>
+                  <p className="text-xs text-slate-500">Audio instructions throughout</p>
                 </div>
               </div>
               <ToggleSwitch 
@@ -1241,10 +1243,10 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
 
             {/* Volume Controls - shown when voice is enabled */}
             {settings.voiceGuidance && (
-              <div className="mt-4 ml-13 pl-13 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="mt-3 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
                 {/* Volume Slider */}
-                <div className="bg-slate-50 rounded-xl p-4">
-                  <div className="flex items-center justify-between mb-3">
+                <div className="bg-slate-50 rounded-xl p-3">
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <VolumeIcon className="w-4 h-4 text-slate-600" />
                       <span className="text-sm font-medium text-slate-700">Volume</span>
@@ -1269,8 +1271,8 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
                 </div>
 
                 {/* Speech Rate Slider */}
-                <div className="bg-slate-50 rounded-xl p-4">
-                  <div className="flex items-center justify-between mb-3">
+                <div className="bg-slate-50 rounded-xl p-3">
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <PlayCircle className="w-4 h-4 text-slate-600" />
                       <span className="text-sm font-medium text-slate-700">Speech Speed</span>
@@ -1301,7 +1303,7 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
                 <button
                   onClick={testVoice}
                   disabled={isSpeaking}
-                  className={`w-full py-3 px-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-all ${
+                  className={`w-full py-2.5 px-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-all ${
                     isSpeaking 
                       ? 'bg-blue-100 text-blue-600 cursor-not-allowed' 
                       : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -1326,16 +1328,16 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
           <div className="h-px bg-slate-200" />
 
           {/* Large Text */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between py-1">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
                 settings.largeText ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-600'
               }`}>
-                <Type className="w-5 h-5" />
+                <Type className="w-4 h-4" />
               </div>
               <div>
-                <p className="font-semibold text-slate-800">Large Text</p>
-                <p className="text-sm text-slate-500">Increase text size for readability</p>
+                <p className="font-semibold text-slate-800 text-sm">Large Text</p>
+                <p className="text-xs text-slate-500">Increase text size for readability</p>
               </div>
             </div>
             <ToggleSwitch 
@@ -1346,16 +1348,16 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
           </div>
 
           {/* High Contrast */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between py-1">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
                 settings.highContrast ? 'bg-yellow-400 text-black' : 'bg-slate-800 text-white'
               }`}>
-                <Eye className="w-5 h-5" />
+                <Eye className="w-4 h-4" />
               </div>
               <div>
-                <p className="font-semibold text-slate-800">High Contrast</p>
-                <p className="text-sm text-slate-500">Enhanced visibility mode</p>
+                <p className="font-semibold text-slate-800 text-sm">High Contrast</p>
+                <p className="text-xs text-slate-500">Enhanced visibility mode</p>
               </div>
             </div>
             <ToggleSwitch 
@@ -1366,16 +1368,20 @@ const AccessibilityScreen = ({ settings, setSettings, onContinue, onBack }) => {
           </div>
         </div>
       </Card>
+      </div>
 
-      <div className="w-full flex gap-4">
-        {onBack && (
-          <SecondaryButton onClick={onBack}>
-            <ArrowLeft className="w-4 h-4" /> Back
-          </SecondaryButton>
-        )}
-        <PrimaryButton onClick={onContinue} className="flex-1">
-          {onBack ? 'Save & Return' : 'Continue to Health Assessment'} <ArrowRight className="w-5 h-5" />
-        </PrimaryButton>
+      {/* Sticky button footer */}
+      <div className="flex-shrink-0 pt-3 pb-2">
+        <div className="flex gap-4">
+          {onBack && (
+            <SecondaryButton onClick={onBack}>
+              <ArrowLeft className="w-4 h-4" /> Back
+            </SecondaryButton>
+          )}
+          <PrimaryButton onClick={onContinue} className="flex-1">
+            {onBack ? 'Save & Return' : 'Continue to Health Assessment'} <ArrowRight className="w-5 h-5" />
+          </PrimaryButton>
+        </div>
       </div>
     </div>
   );
@@ -2927,7 +2933,7 @@ export default function ExtendiKiosk() {
       </header>
 
       {/* Main Content */}
-      <main className="pt-20 pb-6 px-6 h-full flex items-center justify-center">
+      <main className={`pt-20 pb-6 px-6 h-full flex ${step === STEPS.ACCESSIBILITY ? 'items-stretch' : 'items-center'} justify-center overflow-hidden`}>
         {step === STEPS.WELCOME && (
           <WelcomeScreen 
             onSelect={handleMethodSelect} 
