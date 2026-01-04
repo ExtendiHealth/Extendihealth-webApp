@@ -1,0 +1,465 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+:root {
+  --color-cyan-500: #06b6d4;
+  --color-teal-500: #14b8a6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f9fafb;
+}
+
+/* ============================================
+   CUSTOM ANIMATIONS
+   ============================================ */
+
+@keyframes pulse-draw {
+  0% { 
+    stroke-dashoffset: 200; 
+    opacity: 0.5; 
+  }
+  50% { 
+    stroke-dashoffset: 0; 
+    opacity: 1; 
+  }
+  100% { 
+    stroke-dashoffset: -200; 
+    opacity: 0.5; 
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2); 
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Hide scrollbar on mobile */
+@media (max-width: 639px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #06b6d4;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #06b6d4;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   LEAFLET MAP CUSTOMIZATION
+   ============================================ */
+
+.leaflet-container {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+}
+
+.leaflet-popup-tip {
+  background: white;
+}
+
+.custom-marker {
+  background: transparent;
+  border: none;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: white !important;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  .print\:block {
+    display: block !important;
+  }
+  
+  .print\:p-0 {
+    padding: 0 !important;
+  }
+  
+  .print\:m-0 {
+    margin: 0 !important;
+  }
+  
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+  
+  .print\:border-0 {
+    border: none !important;
+  }
+  
+  /* Page setup */
+  @page {
+    margin: 1cm;
+    size: A4;
+  }
+  
+  /* Avoid breaks */
+  .print-avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  .print-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+  
+  .print-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+  
+  /* Reset layout for printing */
+  main {
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Hide non-essential elements */
+  header, nav, footer, aside,
+  button:not(.print-show),
+  .fixed, .sticky {
+    display: none !important;
+  }
+  
+  /* Make cards print nicely */
+  .bg-white {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  
+  /* Ensure text is readable */
+  * {
+    color: black !important;
+  }
+  
+  a {
+    text-decoration: underline !important;
+  }
+  
+  /* Show URLs after links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666 !important;
+  }
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+/* Touch-friendly targets on mobile */
+@media (max-width: 639px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --color-cyan-500: #0891b2;
+    --color-teal-500: #0d9488;
+  }
+  
+  .bg-gray-50 {
+    background-color: white !important;
+  }
+  
+  .border-gray-100,
+  .border-gray-200 {
+    border-color: black !important;
+  }
+}
+
+/* Dark mode support (future) */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles can be added here */
+}
+
+/* ============================================
+   ACTIVE STATE SCALE
+   ============================================ */
+
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   GRADIENT TEXT (for headings)
+   ============================================ */
+
+.text-gradient {
+  background: linear-gradient(to right, #06b6d4, #14b8a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   CARD HOVER EFFECTS
+   ============================================ */
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   ADDITIONAL UTILITIES FOR LANDING PAGE
+   ============================================ */
+
+/* Pointer Events */
+.pointer-events-none { pointer-events: none; }
+
+/* Blur Effects */
+.blur-3xl { filter: blur(64px); }
+
+/* Additional Transforms */
+.-translate-x-1\/2 { transform: translateX(-50%); }
+.-translate-y-1\/2 { transform: translateY(-50%); }
+.hover\:-translate-y-1:hover { transform: translateY(-0.25rem); }
+
+/* Flex Wrap */
+.flex-wrap { flex-wrap: wrap; }
+
+/* Leading */
+.leading-tight { line-height: 1.25; }
+
+/* Additional Widths & Heights */
+.max-w-md { max-width: 28rem; }
+.max-w-xl { max-width: 36rem; }
+.max-w-7xl { max-width: 80rem; }
+.w-28 { width: 7rem; }
+.w-36 { width: 9rem; }
+.h-28 { height: 7rem; }
+.h-36 { height: 9rem; }
+.w-96 { width: 24rem; }
+.h-96 { height: 24rem; }
+
+/* Calc Utilities */
+.min-h-\[calc\(100vh-140px\)\] { min-height: calc(100vh - 140px); }
+
+/* Additional Colors */
+.text-cyan-50 { color: #ecfeff; }
+.bg-cyan-300\/10 { background-color: rgba(103, 232, 249, 0.1); }
+.bg-teal-400\/20 { background-color: rgba(45, 212, 191, 0.2); }
+.bg-green-400 { background-color: #4ade80; }
+.border-white\/30 { border-color: rgba(255, 255, 255, 0.3); }
+
+/* Responsive Utilities */
+@media (min-width: 640px) {
+  .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .sm\:w-12 { width: 3rem; }
+  .sm\:h-12 { height: 3rem; }
+  .sm\:w-6 { width: 1.5rem; }
+  .sm\:h-6 { height: 1.5rem; }
+  .sm\:w-36 { width: 9rem; }
+  .sm\:h-36 { height: 9rem; }
+  .sm\:gap-3 { gap: 0.75rem; }
+  .sm\:gap-4 { gap: 1rem; }
+  .sm\:text-xl { font-size: 1.25rem; }
+  .sm\:text-sm { font-size: 0.875rem; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+  .lg\:flex-row { flex-direction: row; }
+  .lg\:items-center { align-items: center; }
+  .lg\:gap-12 { gap: 3rem; }
+}
+
+@media (min-width: 1280px) {
+  .xl\:text-6xl { font-size: 3.75rem; line-height: 1; }
+}
+
+/* Utility class to hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
